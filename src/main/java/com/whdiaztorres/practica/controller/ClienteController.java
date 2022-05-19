@@ -14,7 +14,7 @@ public class ClienteController {
     public List<Cliente> listar(){
     Cliente cliente1 = new Cliente();
     cliente1.setId(1l);
-    cliente1.setNome("gerardo");
+    cliente1.setNome("gerardo3546");
     cliente1.setEmail("ge@gmail.com");
     cliente1.setTelefone("1234653");
 

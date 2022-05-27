@@ -13,6 +13,10 @@ import javax.transaction.Transactional;
 public class CatalogoClienteService {
 
     private ClienteRepository clienteRepository;
+    public Cliente buscar(Long clienteId){
+        return clienteRepository.findById(clienteId)
+                .orElseThrow(() -> new NegocioException("cliente nao encontrado"));
+    }
 
     @Transactional
     public Cliente salvar(Cliente cliente){

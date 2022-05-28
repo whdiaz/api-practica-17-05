@@ -1,5 +1,6 @@
 package com.whdiaztorres.practica.api.exeptionhandler;
 
+import com.whdiaztorres.practica.domain.exception.EntidadeNaoEncontradaException;
 import com.whdiaztorres.practica.domain.exception.NegocioException;
 import lombok.AllArgsConstructor;
 import org.springframework.context.MessageSource;
@@ -44,6 +45,19 @@ public class ApiExeptionHandler extends ResponseEntityExceptionHandler {
         problema.setCampos(campos);
 
         return handleExceptionInternal(ex, problema, headers, status, request);
+    }
+
+    @ExceptionHandler(EntidadeNaoEncontradaException.class)
+    public ResponseEntity<Object> handleEntidadeNaoEncontrada(EntidadeNaoEncontradaException ex, WebRequest request){
+        HttpStatus status =HttpStatus.NOT_FOUND;
+
+        Problema problema = new Problema();
+        problema.setStatus(status.value());
+        problema.setDataHora(OffsetDateTime.now());
+        problema.setTitulo(ex.getMessage());
+
+        return handleExceptionInternal(ex, problema, new HttpHeaders(), status, request);
+
     }
 
     @ExceptionHandler(NegocioException.class)

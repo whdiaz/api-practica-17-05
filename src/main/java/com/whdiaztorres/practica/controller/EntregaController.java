@@ -5,6 +5,7 @@ import com.whdiaztorres.practica.api.model.EntregaModel;
 import com.whdiaztorres.practica.api.model.input.EntregaInput;
 import com.whdiaztorres.practica.domain.model.Entrega;
 import com.whdiaztorres.practica.domain.repository.EntregaRepository;
+import com.whdiaztorres.practica.domain.service.FinalizacaoEntregaService;
 import com.whdiaztorres.practica.domain.service.SolicitacaoEntregaService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ public class EntregaController {
 
     private EntregaRepository entregaRepository;
     private SolicitacaoEntregaService solicitacaoEntregaService;
+    private FinalizacaoEntregaService finalizacaoEntregaService;
     private EntregaAssembler entregaAssembler;
 
     @PostMapping
@@ -31,6 +33,14 @@ public class EntregaController {
         return entregaAssembler.toModel(entregaSolicitada);
     }
 
+    @PutMapping("/{entregaId}/finalizacao")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void finalizar(@PathVariable Long entregaId){
+        finalizacaoEntregaService.finalizar(entregaId);
+
+    }
+
+    @GetMapping
     public List<EntregaModel> listar(){
         return entregaAssembler.toCollectionModel(entregaRepository.findAll());
     }

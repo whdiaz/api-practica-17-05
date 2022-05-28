@@ -1,5 +1,6 @@
 package com.whdiaztorres.practica.domain.model;
 
+import com.whdiaztorres.practica.domain.exception.NegocioException;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -51,4 +52,24 @@ public class Entrega {
         return ocorrencia;
 
     }
+
+    public void finalizar() {
+        if (naoPodeSerfinalizado()){
+            throw  new NegocioException("entrega nao pode ser finalizada");
+        }
+
+        setStatus(StatusEntrega.FINALIZADA);
+        setDataFinalizacao(OffsetDateTime.now());
+    }
+
+    public  boolean podeSerFinalizado(){
+        return StatusEntrega.PENDENTE.equals(getStatus());
+    }
+
+    public  boolean naoPodeSerfinalizado(){
+        return !podeSerFinalizado();
+    }
+
+
+
 }
